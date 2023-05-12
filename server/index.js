@@ -1,5 +1,6 @@
 const express=require('express');
 const cors=require('cors');
+const bodyParser = require("body-parser");
 const multer  = require('multer');
 const images=require('./models/image')
 
@@ -12,6 +13,8 @@ const app=express();
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 
@@ -25,6 +28,8 @@ const storage = multer.diskStorage({
   });
   
   const upload = multer({ storage: storage });
+// const storage = multer.memoryStorage()
+// const upload = multer({ storage: storage })
   
   app.post("/", upload.single("file"), async(req, res) => {
     try{
